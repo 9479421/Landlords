@@ -1,0 +1,15 @@
+release/card.o
+release/cardpanel.o
+release/cards.o
+release/gamecontrol.o
+release/main.o
+release/gamepanel.o
+release/player.o
+release/robot.o
+release/userplayer.o
+release/moc_cardpanel.o
+release/moc_gamecontrol.o
+release/moc_gamepanel.o
+release/moc_player.o
+release/moc_robot.o
+release/moc_userplayer.o
