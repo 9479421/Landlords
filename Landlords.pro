@@ -16,6 +16,7 @@ SOURCES += \
     gamecontrol.cpp \
     main.cpp \
     gamepanel.cpp \
+    mybutton.cpp \
     player.cpp \
     robot.cpp \
     scorepanel.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     cards.h \
     gamecontrol.h \
     gamepanel.h \
+    mybutton.h \
     player.h \
     robot.h \
     scorepanel.h \
@@ -42,3 +44,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    res.qrc

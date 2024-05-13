@@ -48,6 +48,12 @@ bool greaterSort(const Card &c1, const Card &c2)
     }
 }
 
+bool operator <(const Card& c1, const Card& c2)
+{
+    return lessSort(c1, c2);
+}
+
+
 bool operator ==(const Card&left ,const Card&right){
     return (left.point()== right.point() && left.suit() == right.suit());
 }

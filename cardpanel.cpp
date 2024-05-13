@@ -21,7 +21,7 @@ QPixmap CardPanel::getImage()
     return m_front;
 }
 
-void CardPanel::setFrontSize(bool flag)
+void CardPanel::setFrontSide(bool flag)
 {
     m_isfront = flag;
 }
@@ -31,7 +31,7 @@ bool CardPanel::isFrontSide()
     return m_isfront;
 }
 
-void CardPanel::SetSelected(bool flag)
+void CardPanel::setSelected(bool flag)
 {
     m_isSelect = flag;
 }
@@ -41,7 +41,7 @@ bool CardPanel::isSelected()
     return m_isSelect;
 }
 
-void CardPanel::SetCard(Card &card)
+void CardPanel::setCard(Card &card)
 {
     m_card = card;
 }

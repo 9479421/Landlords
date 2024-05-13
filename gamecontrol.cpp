@@ -114,14 +114,14 @@ void GameControl::resetCardData()
     m_robotRight->clearCards();
     m_user->clearCards();
     // 初始化出牌玩家和牌
+    m_pendPlayer = nullptr;
     m_pendCards.clear();
-    m_pendCards.clear();
-
 }
 
 void GameControl::startLordCard()
 {
     m_curPlayer->prepareCallLord();
+    emit playerStatusChanged(m_curPlayer, ThinkingForCallLord);
 }
 
 void GameControl::becomeLord(Player* player)
@@ -134,4 +134,9 @@ void GameControl::becomeLord(Player* player)
     player->storeDispatchCard(m_allCards);
 
     m_curPlayer->preparePlayHand();
+}
+
+void GameControl::clearPlayerScore()
+{
+
 }

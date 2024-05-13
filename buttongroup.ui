@@ -6,14 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>504</width>
-    <height>191</height>
+    <width>500</width>
+    <height>60</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <widget class="QWidget" name="startPage">
@@ -25,14 +40,14 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>188</width>
+           <width>195</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="MyButton" name="start">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -45,7 +60,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>187</width>
+           <width>194</width>
            <height>20</height>
           </size>
          </property>
@@ -62,14 +77,14 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>188</width>
+           <width>195</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="MyButton" name="playCard">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -82,7 +97,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>187</width>
+           <width>194</width>
            <height>20</height>
           </size>
          </property>
@@ -99,14 +114,14 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>95</width>
+           <width>100</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="MyButton" name="pass">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -119,14 +134,14 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>95</width>
+           <width>99</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="MyButton" name="playCard1">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -139,7 +154,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>95</width>
+           <width>100</width>
            <height>20</height>
           </size>
          </property>
@@ -156,14 +171,14 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>37</width>
+           <width>40</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="giveup">
+        <widget class="MyButton" name="giveup">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -186,7 +201,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="oneScore">
+        <widget class="MyButton" name="oneScore">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -209,7 +224,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="twoScore">
+        <widget class="MyButton" name="twoScore">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -232,7 +247,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="threeScore">
+        <widget class="MyButton" name="threeScore">
          <property name="text">
           <string>PushButton</string>
          </property>
@@ -245,7 +260,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>38</width>
+           <width>1</width>
            <height>20</height>
           </size>
          </property>
@@ -258,6 +273,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyButton</class>
+   <extends>QPushButton</extends>
+   <header>mybutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

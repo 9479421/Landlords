@@ -12,3 +12,10 @@ ScorePanel::~ScorePanel()
 {
     delete ui;
 }
+
+void ScorePanel::setScores(int left, int right, int user)
+{
+    ui->leftScore->setText(QString::number(left));
+    ui->rightScore->setText(QString::number(right));
+    ui->meScore->setText(QString::number(user));
+}

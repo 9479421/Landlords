@@ -16,15 +16,15 @@ public:
     QPixmap getImage();
 
     // 扑克牌显示那一面
-    void setFrontSize(bool flag);
+    void setFrontSide(bool flag);
     bool isFrontSide();
 
     //记录窗口是否被选中了
-    void SetSelected(bool flag);
+    void setSelected(bool flag);
     bool isSelected();
 
     // 扑克牌的花色以及点数
-    void SetCard(Card& card);
+    void setCard(Card& card);
     Card getCard();
 
     // 扑克牌的所有者
