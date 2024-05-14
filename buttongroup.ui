@@ -142,6 +142,9 @@
        </item>
        <item>
         <widget class="MyButton" name="playCard1">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>PushButton</string>
          </property>

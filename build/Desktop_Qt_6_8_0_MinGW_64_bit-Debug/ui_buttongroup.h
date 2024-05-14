@@ -120,6 +120,7 @@ public:
 
         playCard1 = new MyButton(PassOrPlayPage);
         playCard1->setObjectName("playCard1");
+        playCard1->setEnabled(true);
 
         horizontalLayout_4->addWidget(playCard1);
 

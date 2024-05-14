@@ -10,18 +10,21 @@ public:
     explicit MyButton(QWidget *parent = nullptr);
 
     void setImage(QString normal,QString hover,QString pressed);
+
+
+signals:
+
 protected:
     // 鼠标按下
     void MousePressEvent(QMouseEvent *ev);
     // 鼠标释放
     void MouseReleaseEvent(QMouseEvent* ev);
     // 鼠标进入
-    void enterEvent(QMouseEvent* ev);
-    void leaveEvent(QMouseEvent* ev);
+    void enterEvent(QEnterEvent* ev);
+    // 鼠标离开
+    void leaveEvent(QEvent* ev);
     // 绘图
     void paintEvent(QPaintEvent* ev);
-
-signals:
 
 
 private:

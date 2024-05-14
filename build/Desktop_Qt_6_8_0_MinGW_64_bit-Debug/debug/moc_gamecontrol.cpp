@@ -39,7 +39,12 @@ constexpr auto qt_meta_stringdata_CLASSGameControlENDCLASS = QtMocHelpers::strin
     "Player*",
     "player",
     "PlayerStatus",
-    "status"
+    "status",
+    "notifyGrabLordBet",
+    "bet",
+    "flag",
+    "gameStatusChanged",
+    "GameStatus"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -52,18 +57,22 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSGameControlENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   20,    2, 0x06,    1 /* Public */,
+       1,    2,   32,    2, 0x06,    1 /* Public */,
+       7,    3,   37,    2, 0x06,    4 /* Public */,
+      10,    1,   44,    2, 0x06,    8 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5,    4,    6,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::Int, QMetaType::Bool,    4,    8,    9,
+    QMetaType::Void, 0x80000000 | 11,    6,
 
        0        // eod
 };
@@ -80,7 +89,15 @@ Q_CONSTINIT const QMetaObject GameControl::staticMetaObject = { {
         // method 'playerStatusChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<Player *, std::false_type>,
-        QtPrivate::TypeAndForceComplete<PlayerStatus, std::false_type>
+        QtPrivate::TypeAndForceComplete<PlayerStatus, std::false_type>,
+        // method 'notifyGrabLordBet'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<Player *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'gameStatusChanged'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<GameStatus, std::false_type>
     >,
     nullptr
 } };
@@ -92,12 +109,21 @@ void GameControl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         (void)_t;
         switch (_id) {
         case 0: _t->playerStatusChanged((*reinterpret_cast< std::add_pointer_t<Player*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<PlayerStatus>>(_a[2]))); break;
+        case 1: _t->notifyGrabLordBet((*reinterpret_cast< std::add_pointer_t<Player*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 2: _t->gameStatusChanged((*reinterpret_cast< std::add_pointer_t<GameStatus>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
         case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< Player* >(); break;
+            }
+            break;
+        case 1:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -111,6 +137,20 @@ void GameControl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
             using _t = void (GameControl::*)(Player * , PlayerStatus );
             if (_t _q_method = &GameControl::playerStatusChanged; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (GameControl::*)(Player * , int , bool );
+            if (_t _q_method = &GameControl::notifyGrabLordBet; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (GameControl::*)(GameStatus );
+            if (_t _q_method = &GameControl::gameStatusChanged; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 2;
                 return;
             }
         }
@@ -136,13 +176,13 @@ int GameControl::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 3;
     }
     return _id;
 }
@@ -152,5 +192,19 @@ void GameControl::playerStatusChanged(Player * _t1, PlayerStatus _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void GameControl::notifyGrabLordBet(Player * _t1, int _t2, bool _t3)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void GameControl::gameStatusChanged(GameStatus _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP

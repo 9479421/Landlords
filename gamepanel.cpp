@@ -53,7 +53,8 @@ void GamePanel::gameControlInit()
 
 
     connect(m_gameCtl,&GameControl::playerStatusChanged , this, &GamePanel::onPlayerStatusChanged);
-
+    connect(m_gameCtl,&GameControl::notifyGrabLordBet , this, &GamePanel::onGrabLordBet);
+    connect(m_gameCtl,&GameControl::gameStatusChanged , this, &GamePanel::gameStatusPrecess);
 }
 
 void GamePanel::updatePlayerScore()
@@ -118,13 +119,11 @@ void GamePanel::initButtonGroup()
         // 修改游戏状态 -> 发牌
         gameStatusPrecess(GameControl::DispatchCard);
     });
-
-
     connect(ui->btnGroup, &ButtonGroup::playHand, this, [=](){});
     connect(ui->btnGroup, &ButtonGroup::pass, this, [=](){});
-    connect(ui->btnGroup, &ButtonGroup::betPoint, this, [=](){});
-
-
+    connect(ui->btnGroup, &ButtonGroup::betPoint, this, [=](int bet){
+        m_gameCtl->getUserPlayer()->grabLordBet(bet);
+    });
 
 
 }
@@ -139,7 +138,6 @@ void GamePanel::initPlayerContext()
         QRect(rect().right() - 190 , 130, 100, height() - 200), // 右侧机器人
         QRect(250, rect().bottom()- 120, width() - 500 , 100) // 当前玩家
     };
-
     // 2.玩家出牌的区域
     QRect playHandRect[] =
     {
@@ -148,8 +146,6 @@ void GamePanel::initPlayerContext()
         QRect(rect().right() - 360 , 150, 100, 100), // 右侧机器人
         QRect(150, rect().bottom()- 290, width() - 300 , 100) // 当前玩家
     };
-
-
     // 3.玩家头像显示的位置
     QPoint roleImgPos[] =
     {
@@ -173,8 +169,8 @@ void GamePanel::initPlayerContext()
         context.info->hide();
         // 显示到出牌区域的中心位置
         QRect rect = playHandRect[i];
-        QPoint pt(rect.left() + (rect.width()-context.info->width()) / 2,
-                  rect.top() + (rect.height() - context.info->height() / 2));
+        QPoint pt(rect.left() + (rect.width()- context.info->width()) / 2,
+                  rect.top() + (rect.height() - context.info->height()) / 2);
         context.info->move(pt);
         //玩家的头像
         context.roleImg = new QLabel(this);
@@ -388,7 +384,7 @@ void GamePanel::onPlayerStatusChanged(Player *player, GameControl::PlayerStatus 
     switch(status){
     case GameControl::ThinkingForCallLord:
         if(player == m_gameCtl->getUserPlayer()){
-            ui->btnGroup->selectPanel(ButtonGroup::CallLord);
+            ui->btnGroup->selectPanel(ButtonGroup::CallLord, m_gameCtl->getPlayerMaxBet());
         }
         break;
     case GameControl::ThinkingForPlayHand:
@@ -398,6 +394,28 @@ void GamePanel::onPlayerStatusChanged(Player *player, GameControl::PlayerStatus 
     default:
         break;
     }
+}
+
+void GamePanel::onGrabLordBet(Player *player, int bet, bool flag)
+{
+    //处理叫地主的显示
+    PlayerContext context = m_contextMap[player];
+    if(bet == 0){
+        context.info->setPixmap(QPixmap(":/images/buqiang.png"));
+    }else{
+        if(flag){
+            //第一次抢地主
+            context.info->setPixmap(QPixmap(":/images/jiaodizhu.png"));
+        }else{
+            //第二次抢地主
+            context.info->setPixmap(QPixmap(":/images/qiangdizhu.png"));
+        }
+    }
+    context.info->show();
+
+    // 显示叫地主的分数
+    // 播放分数的背景音乐
+
 }
 
 void GamePanel::paintEvent(QPaintEvent *ev)

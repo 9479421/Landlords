@@ -7,10 +7,7 @@ MyButton::MyButton(QWidget *parent)
     : QPushButton{parent}
 {
 
-
-
 }
-
 void MyButton::setImage(QString normal, QString hover, QString pressed)
 {
     m_normal = normal;
@@ -21,6 +18,7 @@ void MyButton::setImage(QString normal, QString hover, QString pressed)
 
 void MyButton::MousePressEvent(QMouseEvent *ev)
 {
+    qDebug("2312");
     if(ev->button() == Qt::LeftButton){
         m_pixmap.load(m_pressed);
         update();
@@ -37,13 +35,14 @@ void MyButton::MouseReleaseEvent(QMouseEvent *ev)
     QPushButton::mouseReleaseEvent(ev);
 }
 
-void MyButton::enterEvent(QMouseEvent *ev)
+void MyButton::enterEvent(QEnterEvent *ev)
 {
+
     m_pixmap.load(m_hover);
     update();
 }
 
-void MyButton::leaveEvent(QMouseEvent *ev)
+void MyButton::leaveEvent(QEvent *ev)
 {
     m_pixmap.load(m_normal);
     update();
@@ -53,5 +52,5 @@ void MyButton::paintEvent(QPaintEvent *ev)
 {
     QPainter p(this);
     p.drawPixmap(rect(),m_pixmap);
-    update();
+
 }

@@ -7,6 +7,7 @@ debug/main.o
 debug/gamepanel.o
 debug/mybutton.o
 debug/player.o
+debug/playhand.o
 debug/robot.o
 debug/scorepanel.o
 debug/userplayer.o

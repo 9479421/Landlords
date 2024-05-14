@@ -7,6 +7,7 @@ release/main.o
 release/gamepanel.o
 release/mybutton.o
 release/player.o
+release/playhand.o
 release/robot.o
 release/scorepanel.o
 release/userplayer.o

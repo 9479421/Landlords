@@ -73,7 +73,8 @@ public:
     virtual void preparePlayHand();
 
 signals:
-
+    // 通知已经叫地主下注
+    void notifyGrabLordBet(Player* player,int bet);
 
 protected:
     int m_score;
