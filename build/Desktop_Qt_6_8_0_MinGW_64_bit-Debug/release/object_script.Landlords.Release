@@ -10,6 +10,7 @@ release/player.o
 release/playhand.o
 release/robot.o
 release/scorepanel.o
+release/strategy.o
 release/userplayer.o
 release/qrc_res.o
 release/moc_buttongroup.o

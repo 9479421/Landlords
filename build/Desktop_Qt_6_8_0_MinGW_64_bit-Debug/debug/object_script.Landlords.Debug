@@ -10,6 +10,7 @@ debug/player.o
 debug/playhand.o
 debug/robot.o
 debug/scorepanel.o
+debug/strategy.o
 debug/userplayer.o
 debug/qrc_res.o
 debug/moc_buttongroup.o

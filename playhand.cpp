@@ -57,7 +57,9 @@ void PlayHand::judgeCardType()
     m_pt = Card::Card_Begin;
     m_extra = 0;
 
-    if(isSingle()){
+    if(isPass()){
+        m_type = Hand_Pass;
+    }else if(isSingle()){
         m_type = Hand_Single;
         m_pt = m_oneCard[0];
     }else if(isPair()){
@@ -132,6 +134,14 @@ void PlayHand::judgeCardType()
 
 }
 
+bool PlayHand::isPass()
+{
+    if(m_oneCard.isEmpty() && m_twoCard.isEmpty() && m_threeCard.isEmpty() && m_fourCard.isEmpty()){
+        return true;
+    }
+    return false;
+}
+
 PlayHand::HandType PlayHand::getHandType()
 {
     return m_type;
@@ -145,6 +155,32 @@ Card::CardPoint PlayHand::getCardPoint()
 int PlayHand::getExtra()
 {
     return m_extra;
+}
+
+bool PlayHand::canBeat(const PlayHand &other)
+{
+    // 我的牌型是未知的
+    if(m_type == Hand_Unknown){
+        return false;
+    }
+    if(other.m_type == Hand_Pass){
+        return true;
+    }
+    if(m_type == Hand_Bomb_Jokers){
+        return true;
+    }
+    if(m_type == Hand_Bomb && other.m_type >= Hand_Single && other.m_type <= Hand_Seq_Single){
+        return true;
+    }
+    // 双方的牌型一致
+    if(m_type == other.m_type){
+        if(m_type == Hand_Seq_Pair || m_type == Hand_Seq_Single){
+            return m_pt > other.m_pt && m_extra == other.m_extra;
+        }else{
+            return m_pt > other.m_pt;
+        }
+    }
+    return false;
 }
 
 bool PlayHand::isSingle()

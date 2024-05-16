@@ -32,14 +32,21 @@ Cards &Cards::operator<<(const Cards &cards)
 }
 
 
-void Cards::remove(Card &card)
+void Cards::remove(const Card &card)
 {
     m_cards.remove(card);
 }
 
-void Cards::remove(Cards &cards)
+void Cards::remove(const Cards &cards)
 {
     m_cards.subtract(cards.m_cards);
+}
+
+void Cards::remove(const QVector<Cards> &cards)
+{
+    for(int i = 0 ; i < cards.size(); i++){
+        remove(cards.at(i));
+    }
 }
 
 int Cards::cardCount()
