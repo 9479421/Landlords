@@ -9,6 +9,18 @@ class Strategy
 {
 public:
     Strategy(Player* player, const Cards& cards);
+
+
+
+    // 制定出牌策略
+    Cards makeStrategy();
+    // 第一个出牌
+    Cards firstPlay();
+    // 得到比指定牌型大的牌
+    Cards getGreaterCards(PlayHand type);
+    // 能大过指定的牌时，判断是出牌还是放行，返回true->出牌，false->放行
+    bool whetherToBeat(Cards &cs);
+
     // 找出指定数量（count）的相同点数的牌（point），找出count张点数为point的牌
     Cards findSamePointCards(Card::CardPoint point , int count);
     // 找出所有点数数量为count的牌 ==> 得到一个多张扑克牌数组
@@ -17,6 +29,12 @@ public:
     Cards getRangeCards(Card::CardPoint begin, Card::CardPoint end);
     // 按牌型找牌，并且指定要找的牌是否要大过指定的牌型
     QVector<Cards> findCardType(PlayHand hand, bool beat);
+
+    // 从指定的Cards对象中挑选出满足条件的顺子
+    void pickSeqSingles(QVector<QVector<Cards>> &allSeqRecord,QVector<Cards> &seqSingle,Cards &cards);
+
+    // 最优的顺子的集合的筛选函数
+    QVector<Cards> pickOptimalSeqSingles();
 private:
     using function = Cards (Strategy::*)(Card::CardPoint point);
     struct CardInfo

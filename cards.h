@@ -12,6 +12,7 @@ public:
     // 添加扑克牌
     void add(const Card &card);
     void add(const Cards& cards);
+    void add(const QVector<Cards>& cards);
 
     //一次性插入多个数据（操作符重载 <<）
     Cards& operator<< (const Card& card);
