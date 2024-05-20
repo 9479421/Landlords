@@ -3,12 +3,13 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
-
+CONFIG += static
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    animationwindow.cpp \
     buttongroup.cpp \
     card.cpp \
     cardpanel.cpp \
@@ -20,11 +21,14 @@ SOURCES += \
     player.cpp \
     playhand.cpp \
     robot.cpp \
+    robotgraplord.cpp \
+    robotplayhand.cpp \
     scorepanel.cpp \
     strategy.cpp \
     userplayer.cpp
 
 HEADERS += \
+    animationwindow.h \
     buttongroup.h \
     card.h \
     cardpanel.h \
@@ -35,6 +39,8 @@ HEADERS += \
     player.h \
     playhand.h \
     robot.h \
+    robotgraplord.h \
+    robotplayhand.h \
     scorepanel.h \
     strategy.h \
     userplayer.h

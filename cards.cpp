@@ -106,12 +106,12 @@ int Cards::pointCount(Card::CardPoint point)
 
 bool Cards::contains(const Card &card)
 {
-    m_cards.contains(card);
+    return m_cards.contains(card);
 }
 
 bool Cards::contains(const Cards &cards)
 {
-    m_cards.contains(cards.m_cards);
+    return m_cards.contains(cards.m_cards);
 }
 
 Card Cards::takeRandCard()

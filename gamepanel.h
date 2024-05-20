@@ -7,7 +7,7 @@
 #include <QTimer>
 #include "cardpanel.h"
 #include "gamecontrol.h"
-
+#include "animationwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,6 +23,7 @@ public:
     GamePanel(QWidget *parent = nullptr);
     ~GamePanel();
 
+    enum AnimationType{ShunZi,LianDui,Plane,JokerBomb,Bomb ,Bet};
     // 初始化游戏控制类信息
     void gameControlInit();
     // 更新分数面板的分数
@@ -47,6 +48,10 @@ public:
     void disposCard(Player *player, Cards& cards);
     // 更新扑克牌在窗口中的显示
     void updatePlayerCards(Player* player);
+    // 加载玩家头像
+    QPixmap loadRoleImage(Player::Sex sex, Player::Direction direct,Player::Role role);
+
+
 
     // 定时器的处理动作
     void onDispatchCard();
@@ -54,6 +59,16 @@ public:
     void onPlayerStatusChanged(Player* player, GameControl::PlayerStatus status);
     // 处理玩家抢地主
     void onGrabLordBet(Player*player ,int bet ,bool flag);
+    // 处理玩家的出牌
+    void onDisposePlayHand(Player* player,Cards &cards);
+
+
+    // 显示特效动画
+    void showAnimation(AnimationType type, int bet = 0);
+    // 隐藏玩家打出的牌
+    void hidePlayerDropCards(Player* player);
+
+
 protected:
     void paintEvent(QPaintEvent* ev);
 private:
@@ -88,6 +103,6 @@ private:
     QPoint m_baseCardPos;
     GameControl::GameStatus m_gameStatus;
     QTimer* m_timer;
-
+    AnimationWindow* m_animation;
 };
 #endif // GAMEPANEL_H

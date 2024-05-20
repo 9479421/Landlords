@@ -1,9 +1,10 @@
 #include "gamepanel.h"
+#include "playhand.h"
 #include "ui_gamepanel.h"
 
+#include <QFile>
 #include<QPainter>
 #include<QRandomGenerator>
-
 
 GamePanel::GamePanel(QWidget *parent)
     : QMainWindow(parent)
@@ -33,6 +34,9 @@ GamePanel::GamePanel(QWidget *parent)
     // 定时器实例化
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &GamePanel::onDispatchCard);
+
+    m_animation = new AnimationWindow(this);
+
 }
 
 GamePanel::~GamePanel()
@@ -55,6 +59,7 @@ void GamePanel::gameControlInit()
     connect(m_gameCtl,&GameControl::playerStatusChanged , this, &GamePanel::onPlayerStatusChanged);
     connect(m_gameCtl,&GameControl::notifyGrabLordBet , this, &GamePanel::onGrabLordBet);
     connect(m_gameCtl,&GameControl::gameStatusChanged , this, &GamePanel::gameStatusPrecess);
+    connect(m_gameCtl,&GameControl::notifyPlayHand , this, &GamePanel::onDisposePlayHand);
 }
 
 void GamePanel::updatePlayerScore()
@@ -122,7 +127,8 @@ void GamePanel::initButtonGroup()
     connect(ui->btnGroup, &ButtonGroup::playHand, this, [=](){});
     connect(ui->btnGroup, &ButtonGroup::pass, this, [=](){});
     connect(ui->btnGroup, &ButtonGroup::betPoint, this, [=](int bet){
-        m_gameCtl->getUserPlayer()->grabLordBet(bet);
+        //这是给玩家用的，1、2、3分 机器人有线程去执行grabLordBet
+        m_gameCtl->getUserPlayer()->grabLordBet(bet); //叫地主函数->gameControl（判断叫地主次数和细节）->gamePanel显示
     });
 
 
@@ -194,13 +200,15 @@ void GamePanel::initGameScene()
     // 3. 最后的三张底牌(用于窗口的显示)
     for (int i = 0; i < 3; ++i) {
         CardPanel* panel = new CardPanel(this);
+
         panel->setImage(m_cardBackImg,m_cardBackImg);
+
         m_last3Card.push_back(panel);
         panel->hide();
     }
     // 4. 扑克牌的位置
     m_baseCardPos = QPoint((width() - m_cardSize.width()) / 2,
-                           (height() - m_cardSize.height()) / 2 - 100);
+                           height() / 2 - 100);
 
     m_baseCard->move(m_baseCardPos);
     m_moveCard->move(m_baseCardPos);
@@ -228,15 +236,39 @@ void GamePanel::gameStatusPrecess(GameControl::GameStatus status)
         CardList last3Card = m_gameCtl->getSurplusCards().toCardList();
         // 给底牌窗口设置图片
         for (int i = 0; i < last3Card.size(); ++i) {
+            //设置底牌的front图片
             QPixmap front = m_cardMap[last3Card.at(i)]->getImage();
             m_last3Card[i]->setImage(front, m_cardBackImg);
             m_last3Card[i]->hide();
+
+            qDebug("输出：");
         }
         // 开始叫地主
         m_gameCtl->startLordCard();
         break;
     }
     case GameControl::PlayingHand:
+        // 隐藏发牌区的底牌和移动的牌
+        m_baseCard->hide();
+        m_moveCard->hide(); //其实已经被隐藏了，可写可不写
+        // 显示留给地主的三张底牌
+        //
+        for (int i = 0; i < m_last3Card.size(); ++i) {
+
+            m_last3Card.at(i)->show();
+        }
+        // 隐藏各个玩家抢地主过程中的提示信息
+        for (int i = 0; i < m_playerList.size(); ++i) {
+            //隐藏各个玩家抢地主过程中的提示信息
+            PlayerContext &context  = m_contextMap[m_playerList.at(i)];
+            context.info->hide();
+            //显示各个玩家的头像
+            Player* player = m_playerList.at(i);
+            QPixmap pixmap = loadRoleImage(player->getSex(),player->getDirection(),player->getRole());
+            context.roleImg->setPixmap(pixmap);
+            context.roleImg->show();
+        }
+        //
         break;
     default:
         break;
@@ -248,19 +280,19 @@ void GamePanel::startDispatchCard()
     // 重置每张卡牌的属性
     for (auto it = m_cardMap.begin(); it!=m_cardMap.end(); ++it) {
         it.value()->setSelected(false);
-        it.value()->setFrontSide(true);
+        it.value()->setFrontSide(true); //把所有牌都设置成正面
         it.value()->hide();
     }
     // 隐藏三张底牌
     for (int i = 0; i < m_last3Card.size(); ++i) {
-        m_last3Card[i]->hide();
+        m_last3Card.at(i)->hide();
     }
     // 重置玩家的窗口上下文信息
     int index = m_playerList.indexOf(m_gameCtl->getUserPlayer());
     for (int i = 0; i < m_playerList.size() ; ++i) {
         m_contextMap[m_playerList.at(i)].lastCards.clear();
-        m_contextMap[m_playerList.at(i)].info->clear();
-        m_contextMap[m_playerList.at(i)].roleImg->clear();
+        m_contextMap[m_playerList.at(i)].info->hide();
+        m_contextMap[m_playerList.at(i)].roleImg->hide();
         m_contextMap[m_playerList.at(i)].isFrontSide = i == index ? true : false;
     }
     // 重置所有玩家的卡牌数据
@@ -344,6 +376,82 @@ void GamePanel::updatePlayerCards(Player* player)
             panel->move(leftX,topY + cardSpace*i);
         }
     }
+
+    //显示玩家打出的牌
+
+    //得到当前玩家的出牌区域以及本轮打出的牌
+    QRect playCardRect = m_contextMap[player].playHandRect;
+    Cards lastCards = m_contextMap[player].lastCards;
+    if(!lastCards.isEmpty()){
+
+        int playSpacing = 24;
+
+        CardList lastCardList = lastCards.toCardList();
+        CardList::ConstIterator itplayed = lastCardList.constBegin();
+        for(int i = 0; itplayed!=lastCardList.constEnd(); itplayed++,i++){
+            CardPanel* panel = m_cardMap[*itplayed];
+            panel->setFrontSide(true);
+            panel->raise();
+
+            //将打出的牌移动到出牌区域
+            if(m_contextMap[player].align == Horizontal)
+            {
+                int leftBase = playCardRect.left() +
+                               (playCardRect.width() - (lastCardList.size() - 1)*playSpacing - panel->width()) /2;
+
+                int top = playCardRect.top() + (playCardRect.height() - panel->height()) / 2;
+                panel->move(leftBase + i * playSpacing, top);
+            }
+            else
+            {
+                int left = playCardRect.left() +
+                           (playCardRect.width() - panel->width()) /2;
+
+                int top = playCardRect.top();
+                panel->move(left, top + i * playSpacing);
+            }
+            panel->show();
+        }
+    }
+}
+
+QPixmap GamePanel::loadRoleImage(Player::Sex sex, Player::Direction direct, Player::Role role)
+{
+    QVector<QString> lordMan;
+    QVector<QString> lordWoman;
+    QVector<QString> famerMan;
+    QVector<QString> famerWoman;
+    lordMan << ":/images/lord_man_1.png" << ":/images/lord_man_2.png" ;
+    lordWoman << ":/images/lord_woman_1.png" << ":/images/lord_woman_2.png" ;
+    famerMan << ":/images/farmer_man_1.png" << ":/images/farmer_man_2.png" ;
+    famerWoman << ":/images/farmer_woman_1.png" << ":/images/farmer_woman_2.png" ;
+
+    //加载图片QPixmap QImage
+    QImage image;
+    int random = QRandomGenerator::global()->bounded(2);
+    if(sex == Player::Man && role == Player::Lord)
+    {
+        image.load(lordMan.at(random));
+    }
+    else if(sex == Player::Man && role == Player::Farmer){
+        image.load(famerMan.at(random));
+    }
+    else if(sex == Player::Woman && role == Player::Lord){
+        image.load(lordWoman.at(random));
+    }
+    else if(sex == Player::Woman && role == Player::Farmer){
+        image.load(famerWoman.at(random));
+    }
+
+    QPixmap pixmap;
+    if(direct == Player::Left){
+        pixmap = QPixmap::fromImage(image);
+    }
+    else
+    {
+        pixmap = QPixmap::fromImage(image.mirrored(true,false));
+    }
+    return pixmap;
 }
 
 
@@ -383,13 +491,37 @@ void GamePanel::onPlayerStatusChanged(Player *player, GameControl::PlayerStatus 
 {
     switch(status){
     case GameControl::ThinkingForCallLord:
-        if(player == m_gameCtl->getUserPlayer()){
+        if(player == m_gameCtl->getUserPlayer()){ //只针对人类玩家才会显示选择分数的界面
             ui->btnGroup->selectPanel(ButtonGroup::CallLord, m_gameCtl->getPlayerMaxBet());
         }
         break;
     case GameControl::ThinkingForPlayHand:
+        //1.隐藏上一轮打出的牌
+        hidePlayerDropCards(player);
+        if(player == m_gameCtl->getUserPlayer()){
+            // 取出出牌玩家的对象
+            Player* pendPlayer = m_gameCtl->getPendPlayer();
+            if(pendPlayer == m_gameCtl->getUserPlayer() || pendPlayer == nullptr)
+            {
+                ui->btnGroup->selectPanel(ButtonGroup::PlayCard);
+            }
+            else
+            {
+                ui->btnGroup->selectPanel(ButtonGroup::PassOrPlay);
+            }
+        }
+        else{
+            ui->btnGroup->selectPanel(ButtonGroup::Empty);
+        }
         break;
     case GameControl::Winning:
+        m_contextMap[m_gameCtl->getLeftRobot()].isFrontSide = true;
+        m_contextMap[m_gameCtl->getRightRobot()].isFrontSide = true;
+        updatePlayerCards(m_gameCtl->getLeftRobot());
+        updatePlayerCards(m_gameCtl->getRightRobot());
+        // 更新玩家的得分
+        updatePlayerScore();
+        m_gameCtl->setCurrentPlayer(player); //更新谁先出牌
         break;
     default:
         break;
@@ -414,8 +546,91 @@ void GamePanel::onGrabLordBet(Player *player, int bet, bool flag)
     context.info->show();
 
     // 显示叫地主的分数
+    showAnimation(AnimationType::Bet,bet);
     // 播放分数的背景音乐
 
+}
+
+void GamePanel::onDisposePlayHand(Player *player, Cards &cards)
+{
+
+    // 存储玩家打出的牌
+    auto it = m_contextMap.find(player);
+    it->lastCards = cards;
+    //2.根据牌型播放游戏特效
+    PlayHand hand(cards);
+    PlayHand::HandType type = hand.getHandType();
+    if(type == PlayHand::Hand_Plane ||
+        type == PlayHand::Hand_Plane_Two_Pair ||
+        type == PlayHand::Hand_Plane_Two_Single)
+    {
+        showAnimation(Plane);
+    }
+    else if(type == PlayHand::Hand_Seq_Pair){
+        showAnimation(LianDui);
+    }
+    else if(type == PlayHand::Hand_Seq_Single){
+        showAnimation(ShunZi);
+    }
+    else if(type == PlayHand::Hand_Bomb){
+        showAnimation(Bomb);
+    }
+    else if(type == PlayHand::Hand_Bomb_Jokers)
+    {
+        showAnimation(JokerBomb);
+    }
+    // 如果玩家打出的牌是空牌（不出牌），显示提示信息
+    if(cards.isEmpty()){
+        it->info->setPixmap(QPixmap(":/images/pass.png"));
+        it->info->show();
+    }
+    //3.更新玩家剩余的牌
+    updatePlayerCards(player);
+    //4.播放提示音乐
+
+}
+
+void GamePanel::showAnimation(AnimationType type, int bet)
+{
+    switch(type){
+    case AnimationType::LianDui:
+        break;
+    case AnimationType::ShunZi:
+        break;
+    case AnimationType::Plane:
+        break;
+    case AnimationType::Bomb:
+        break;
+    case AnimationType::JokerBomb:
+        break;
+    case AnimationType::Bet:
+        m_animation->setFixedSize(160,98);
+        m_animation->move( (width() - m_animation->width()) / 2,
+                           (height() - m_animation->height()) /2 - 140);
+        m_animation->showBetScore(bet);
+        break;
+    }
+    m_animation->show();
+}
+
+void GamePanel::hidePlayerDropCards(Player *player)
+{
+    auto it = m_contextMap.find(player);
+    if(it != m_contextMap.end()){
+        if(it->lastCards.isEmpty()){
+            // 牌全部出完了
+            it->info->hide();
+        }
+        else
+        {
+            // Cards --> Card
+            CardList list = it->lastCards.toCardList();
+            for(auto last = list.begin() ; last!=list.end() ; ++last){
+                m_cardMap[*last]->hide();
+            }
+        }
+        it->lastCards.clear();
+    }
 }
 
 void GamePanel::paintEvent(QPaintEvent *ev)

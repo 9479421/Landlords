@@ -4,7 +4,9 @@
 
 CardPanel::CardPanel(QWidget *parent)
     : QWidget{parent}
-{}
+{
+    m_isfront = true;
+}
 
 void CardPanel::setImage(QPixmap &front, QPixmap &back)
 {

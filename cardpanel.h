@@ -40,7 +40,7 @@ signals:
 private:
     QPixmap m_front;
     QPixmap m_back;
-    bool m_isfront;
+    bool m_isfront = true;
     bool m_isSelect;
     Card m_card;
     Player* m_player;

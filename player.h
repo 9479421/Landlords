@@ -68,13 +68,20 @@ public:
     Player* getPendPlayer();
     Cards getPendCards();
 
+    // 存储出牌玩家对象和打出的牌
+    void storePendingInfo(Player* player,Cards &cards);
+
     // 虚函数
     virtual void prepareCallLord();
     virtual void preparePlayHand();
+    virtual void thinkCallLord();
+    virtual void thinkPlayHand();
 
 signals:
     // 通知已经叫地主下注
     void notifyGrabLordBet(Player* player,int bet);
+    // 通知已经出牌
+    void notifyPlayHand(Player* player, Cards& cards);
 
 protected:
     int m_score;
