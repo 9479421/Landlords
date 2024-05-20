@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QMap>
+
 #include <QTimer>
 #include "cardpanel.h"
 #include "gamecontrol.h"
@@ -61,6 +62,12 @@ public:
     void onGrabLordBet(Player*player ,int bet ,bool flag);
     // 处理玩家的出牌
     void onDisposePlayHand(Player* player,Cards &cards);
+    // 处理玩家的选牌
+    void onCardSelected(Qt::MouseButton button);
+    // 处理用户玩家出牌
+    void onUserPlayHand();
+    // 用户玩家放弃出牌
+    void onUserPass();
 
 
     // 显示特效动画
@@ -71,6 +78,8 @@ public:
 
 protected:
     void paintEvent(QPaintEvent* ev);
+    void mouseMoveEvent(QMouseEvent* ev);
+
 private:
     enum CardAlign{Horizontal,Vertical};
     struct PlayerContext{
@@ -104,5 +113,10 @@ private:
     GameControl::GameStatus m_gameStatus;
     QTimer* m_timer;
     AnimationWindow* m_animation;
+    CardPanel* m_curSelCard;
+    QSet<CardPanel*> m_selectCards;
+    QRect m_cardsRect;
+    QHash<CardPanel*, QRect> m_userCards;
+
 };
 #endif // GAMEPANEL_H

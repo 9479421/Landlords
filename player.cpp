@@ -109,11 +109,16 @@ void Player::grabLordBet(int point)
 void Player::storeDispatchCard(Card &card)
 {
     m_cards.add(card);
+
+    Cards cs;
+    cs.add(card);
+    emit notifyPickCards(this, cs);
 }
 
 void Player::storeDispatchCard(Cards &cards)
 {
     m_cards.add(cards);
+    emit notifyPickCards(this, cards);
 }
 
 Cards Player::getCards()

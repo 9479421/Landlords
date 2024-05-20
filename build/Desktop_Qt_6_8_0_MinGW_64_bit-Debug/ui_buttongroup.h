@@ -114,7 +114,7 @@ public:
 
         horizontalLayout_4->addWidget(pass);
 
-        horizontalSpacer_6 = new QSpacerItem(99, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+        horizontalSpacer_6 = new QSpacerItem(40, 15, QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_4->addItem(horizontalSpacer_6);
 

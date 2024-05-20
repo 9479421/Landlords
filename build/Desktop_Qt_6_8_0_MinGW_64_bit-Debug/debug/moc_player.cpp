@@ -41,7 +41,8 @@ constexpr auto qt_meta_stringdata_CLASSPlayerENDCLASS = QtMocHelpers::stringData
     "bet",
     "notifyPlayHand",
     "Cards&",
-    "cards"
+    "cards",
+    "notifyPickCards"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -54,19 +55,21 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSPlayerENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   26,    2, 0x06,    1 /* Public */,
-       6,    2,   31,    2, 0x06,    4 /* Public */,
+       1,    2,   32,    2, 0x06,    1 /* Public */,
+       6,    2,   37,    2, 0x06,    4 /* Public */,
+       9,    2,   42,    2, 0x06,    7 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::Int,    4,    5,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 7,    4,    8,
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 7,    4,    8,
 
        0        // eod
@@ -88,6 +91,10 @@ Q_CONSTINIT const QMetaObject Player::staticMetaObject = { {
         // method 'notifyPlayHand'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<Player *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<Cards &, std::false_type>,
+        // method 'notifyPickCards'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<Player *, std::false_type>,
         QtPrivate::TypeAndForceComplete<Cards &, std::false_type>
     >,
     nullptr
@@ -101,6 +108,7 @@ void Player::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         switch (_id) {
         case 0: _t->notifyGrabLordBet((*reinterpret_cast< std::add_pointer_t<Player*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 1: _t->notifyPlayHand((*reinterpret_cast< std::add_pointer_t<Player*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Cards&>>(_a[2]))); break;
+        case 2: _t->notifyPickCards((*reinterpret_cast< std::add_pointer_t<Player*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<Cards&>>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -114,6 +122,13 @@ void Player::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
             }
             break;
         case 1:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< Player* >(); break;
+            }
+            break;
+        case 2:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -134,6 +149,13 @@ void Player::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
             using _t = void (Player::*)(Player * , Cards & );
             if (_t _q_method = &Player::notifyPlayHand; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (Player::*)(Player * , Cards & );
+            if (_t _q_method = &Player::notifyPickCards; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 2;
                 return;
             }
         }
@@ -159,13 +181,13 @@ int Player::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }
@@ -182,5 +204,12 @@ void Player::notifyPlayHand(Player * _t1, Cards & _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void Player::notifyPickCards(Player * _t1, Cards & _t2)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP

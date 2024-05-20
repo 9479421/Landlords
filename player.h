@@ -82,6 +82,9 @@ signals:
     void notifyGrabLordBet(Player* player,int bet);
     // 通知已经出牌
     void notifyPlayHand(Player* player, Cards& cards);
+    // 通知已经发牌了,3张底牌
+    void notifyPickCards(Player* player, Cards& cards);
+
 
 protected:
     int m_score;
@@ -96,7 +99,7 @@ protected:
     Cards m_cards; //存储多张扑克牌（玩家手中的牌）
 
     Cards m_pendCards;
-    Player* m_pendPlayer;
+    Player* m_pendPlayer = nullptr; //默认是空值，防止第一次地主开始出牌BUG使用
 
 };
 

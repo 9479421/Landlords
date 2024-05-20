@@ -141,6 +141,8 @@ void GameControl::startLordCard()
 
 void GameControl::becomeLord(Player* player, int bet)
 {
+    // 成为地主后，通知当前地主玩家直接preparePlayHand()->
+
     m_curBet = bet;
     player->setRole(Player::Lord);
     player->getPrevPlayer()->setRole(Player::Farmer);

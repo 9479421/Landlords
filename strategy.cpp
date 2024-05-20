@@ -67,19 +67,19 @@ Cards Strategy::firstPlay()
 
     // 有没有飞机
     QVector<Cards> planeArray = Strategy(m_player,backup).findCardType(PlayHand(PlayHand::Hand_Plane, Card::Card_Begin , 0) , false);
-    if(planeArray.isEmpty()){
+    if(!planeArray.isEmpty()){
         hasPlane = true;
         backup.remove(planeArray);
     }
     // 有没有三张点数相同的牌
     QVector<Cards> seqTripleArray = Strategy(m_player,backup).findCardType(PlayHand(PlayHand::Hand_Triple, Card::Card_Begin , 0) , false);
-    if(seqTripleArray.isEmpty()){
+    if(!seqTripleArray.isEmpty()){
         hasTriple = true;
         backup.remove(seqTripleArray);
     }
     // 有没有连对
     QVector<Cards> seqPairArray = Strategy(m_player,backup).findCardType(PlayHand(PlayHand::Hand_Seq_Pair, Card::Card_Begin , 0) , false);
-    if(seqPairArray.isEmpty()){
+    if(!seqPairArray.isEmpty()){
         hasPair = true;
         backup.remove(seqPairArray);
     }
@@ -216,7 +216,7 @@ Cards Strategy::getGreaterCards(PlayHand type)
 {
     //1. 出牌玩家和当前玩家不是一伙的
     Player* pendPlayer = m_player->getPendPlayer();
-    if(pendPlayer->getRole() != m_player->getRole() && pendPlayer->getCards().cardCount() <=3 ){
+    if(pendPlayer!=nullptr && pendPlayer->getRole() != m_player->getRole() && pendPlayer->getCards().cardCount() <=3 ){
         QVector<Cards>bombs = findCardsByCount(4);
         for (int i = 0; i < bombs.size(); ++i) {
             if(PlayHand(bombs[i]).canBeat(type)){

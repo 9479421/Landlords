@@ -17,7 +17,8 @@ void Robot::prepareCallLord()
 
 void Robot::preparePlayHand()
 {
-
+    RobotPlayHand* subThread = new RobotPlayHand(this);
+    subThread->start();
 }
 
 void Robot::thinkCallLord()
