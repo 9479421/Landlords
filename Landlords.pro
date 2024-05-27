@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,10 +10,13 @@ CONFIG += static
 
 SOURCES += \
     animationwindow.cpp \
+    bgmcontrol.cpp \
     buttongroup.cpp \
     card.cpp \
     cardpanel.cpp \
     cards.cpp \
+    countdown.cpp \
+    endingpanel.cpp \
     gamecontrol.cpp \
     main.cpp \
     gamepanel.cpp \
@@ -29,10 +32,13 @@ SOURCES += \
 
 HEADERS += \
     animationwindow.h \
+    bgmcontrol.h \
     buttongroup.h \
     card.h \
     cardpanel.h \
     cards.h \
+    countdown.h \
+    endingpanel.h \
     gamecontrol.h \
     gamepanel.h \
     mybutton.h \

@@ -9,6 +9,8 @@
 #include "cardpanel.h"
 #include "gamecontrol.h"
 #include "animationwindow.h"
+#include "countdown.h"
+#include "bgmcontrol.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -74,7 +76,10 @@ public:
     void showAnimation(AnimationType type, int bet = 0);
     // 隐藏玩家打出的牌
     void hidePlayerDropCards(Player* player);
-
+    // 显示玩家的最终得分
+    void showEndingScorePanel();
+    // 初始化闹钟倒计时
+    void initCountDown();
 
 protected:
     void paintEvent(QPaintEvent* ev);
@@ -117,6 +122,9 @@ private:
     QSet<CardPanel*> m_selectCards;
     QRect m_cardsRect;
     QHash<CardPanel*, QRect> m_userCards;
+    CountDown* m_countDown;
+
+    BGMControl* m_bgm;
 
 };
 #endif // GAMEPANEL_H

@@ -23,13 +23,13 @@ public:
     QGridLayout *gridLayout;
     QLabel *rightScore;
     QLabel *meScore;
-    QLabel *label;
-    QLabel *label_4;
-    QLabel *label_7;
-    QLabel *label_5;
+    QLabel *meTitle;
+    QLabel *leftTitle;
+    QLabel *rightTitle;
+    QLabel *score2;
     QLabel *leftScore;
-    QLabel *label_3;
-    QLabel *label_8;
+    QLabel *score1;
+    QLabel *score3;
 
     void setupUi(QWidget *ScorePanel)
     {
@@ -58,37 +58,37 @@ public:
 
         gridLayout->addWidget(meScore, 0, 1, 1, 1);
 
-        label = new QLabel(ScorePanel);
-        label->setObjectName("label");
-        label->setFont(font);
-        label->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-        label->setAlignment(Qt::AlignCenter);
+        meTitle = new QLabel(ScorePanel);
+        meTitle->setObjectName("meTitle");
+        meTitle->setFont(font);
+        meTitle->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        meTitle->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label, 0, 0, 1, 1);
+        gridLayout->addWidget(meTitle, 0, 0, 1, 1);
 
-        label_4 = new QLabel(ScorePanel);
-        label_4->setObjectName("label_4");
-        label_4->setFont(font);
-        label_4->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-        label_4->setAlignment(Qt::AlignCenter);
+        leftTitle = new QLabel(ScorePanel);
+        leftTitle->setObjectName("leftTitle");
+        leftTitle->setFont(font);
+        leftTitle->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        leftTitle->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label_4, 1, 0, 1, 1);
+        gridLayout->addWidget(leftTitle, 1, 0, 1, 1);
 
-        label_7 = new QLabel(ScorePanel);
-        label_7->setObjectName("label_7");
-        label_7->setFont(font);
-        label_7->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-        label_7->setAlignment(Qt::AlignCenter);
+        rightTitle = new QLabel(ScorePanel);
+        rightTitle->setObjectName("rightTitle");
+        rightTitle->setFont(font);
+        rightTitle->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        rightTitle->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label_7, 2, 0, 1, 1);
+        gridLayout->addWidget(rightTitle, 2, 0, 1, 1);
 
-        label_5 = new QLabel(ScorePanel);
-        label_5->setObjectName("label_5");
-        label_5->setFont(font);
-        label_5->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-        label_5->setAlignment(Qt::AlignCenter);
+        score2 = new QLabel(ScorePanel);
+        score2->setObjectName("score2");
+        score2->setFont(font);
+        score2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        score2->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label_5, 1, 2, 1, 1);
+        gridLayout->addWidget(score2, 1, 2, 1, 1);
 
         leftScore = new QLabel(ScorePanel);
         leftScore->setObjectName("leftScore");
@@ -98,21 +98,21 @@ public:
 
         gridLayout->addWidget(leftScore, 1, 1, 1, 1);
 
-        label_3 = new QLabel(ScorePanel);
-        label_3->setObjectName("label_3");
-        label_3->setFont(font);
-        label_3->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-        label_3->setAlignment(Qt::AlignCenter);
+        score1 = new QLabel(ScorePanel);
+        score1->setObjectName("score1");
+        score1->setFont(font);
+        score1->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        score1->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label_3, 0, 2, 1, 1);
+        gridLayout->addWidget(score1, 0, 2, 1, 1);
 
-        label_8 = new QLabel(ScorePanel);
-        label_8->setObjectName("label_8");
-        label_8->setFont(font);
-        label_8->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-        label_8->setAlignment(Qt::AlignCenter);
+        score3 = new QLabel(ScorePanel);
+        score3->setObjectName("score3");
+        score3->setFont(font);
+        score3->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        score3->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label_8, 2, 2, 1, 1);
+        gridLayout->addWidget(score3, 2, 2, 1, 1);
 
 
         retranslateUi(ScorePanel);
@@ -125,13 +125,13 @@ public:
         ScorePanel->setWindowTitle(QCoreApplication::translate("ScorePanel", "Form", nullptr));
         rightScore->setText(QString());
         meScore->setText(QString());
-        label->setText(QCoreApplication::translate("ScorePanel", "\346\210\221", nullptr));
-        label_4->setText(QCoreApplication::translate("ScorePanel", "\345\267\246\344\276\247\346\234\272\345\231\250\344\272\272", nullptr));
-        label_7->setText(QCoreApplication::translate("ScorePanel", "\345\217\263\344\276\247\346\234\272\345\231\250\344\272\272", nullptr));
-        label_5->setText(QCoreApplication::translate("ScorePanel", "\345\210\206", nullptr));
+        meTitle->setText(QCoreApplication::translate("ScorePanel", "\346\210\221", nullptr));
+        leftTitle->setText(QCoreApplication::translate("ScorePanel", "\345\267\246\344\276\247\346\234\272\345\231\250\344\272\272", nullptr));
+        rightTitle->setText(QCoreApplication::translate("ScorePanel", "\345\217\263\344\276\247\346\234\272\345\231\250\344\272\272", nullptr));
+        score2->setText(QCoreApplication::translate("ScorePanel", "\345\210\206", nullptr));
         leftScore->setText(QString());
-        label_3->setText(QCoreApplication::translate("ScorePanel", "\345\210\206", nullptr));
-        label_8->setText(QCoreApplication::translate("ScorePanel", "\345\210\206", nullptr));
+        score1->setText(QCoreApplication::translate("ScorePanel", "\345\210\206", nullptr));
+        score3->setText(QCoreApplication::translate("ScorePanel", "\345\210\206", nullptr));
     } // retranslateUi
 
 };

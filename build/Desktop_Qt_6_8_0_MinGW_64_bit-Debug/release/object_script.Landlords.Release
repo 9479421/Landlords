@@ -1,8 +1,11 @@
 release/animationwindow.o
+release/bgmcontrol.o
 release/buttongroup.o
 release/card.o
 release/cardpanel.o
 release/cards.o
+release/countdown.o
+release/endingpanel.o
 release/gamecontrol.o
 release/main.o
 release/gamepanel.o
@@ -17,8 +20,11 @@ release/strategy.o
 release/userplayer.o
 release/qrc_res.o
 release/moc_animationwindow.o
+release/moc_bgmcontrol.o
 release/moc_buttongroup.o
 release/moc_cardpanel.o
+release/moc_countdown.o
+release/moc_endingpanel.o
 release/moc_gamecontrol.o
 release/moc_gamepanel.o
 release/moc_mybutton.o

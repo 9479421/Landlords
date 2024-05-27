@@ -1,8 +1,11 @@
 debug/animationwindow.o
+debug/bgmcontrol.o
 debug/buttongroup.o
 debug/card.o
 debug/cardpanel.o
 debug/cards.o
+debug/countdown.o
+debug/endingpanel.o
 debug/gamecontrol.o
 debug/main.o
 debug/gamepanel.o
@@ -17,8 +20,11 @@ debug/strategy.o
 debug/userplayer.o
 debug/qrc_res.o
 debug/moc_animationwindow.o
+debug/moc_bgmcontrol.o
 debug/moc_buttongroup.o
 debug/moc_cardpanel.o
+debug/moc_countdown.o
+debug/moc_endingpanel.o
 debug/moc_gamecontrol.o
 debug/moc_gamepanel.o
 debug/moc_mybutton.o

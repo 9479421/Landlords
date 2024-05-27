@@ -99,7 +99,7 @@ protected:
     Cards m_cards; //存储多张扑克牌（玩家手中的牌）
 
     Cards m_pendCards;
-    Player* m_pendPlayer = nullptr; //默认是空值，防止第一次地主开始出牌BUG使用
+    Player* m_pendPlayer; //默认是空值，防止第一次地主开始出牌BUG使用
 
 };
 
