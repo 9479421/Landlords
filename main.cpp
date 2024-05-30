@@ -1,6 +1,7 @@
 #include "gamepanel.h"
 
 #include <QApplication>
+#include "loading.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +10,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Cards>("Cards&");
     qRegisterMetaType<Cards>("Cards");
 
-    GamePanel w;
-    w.show();
+    Loading loading;
+    loading.show();
     return a.exec();
 }

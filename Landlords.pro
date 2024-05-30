@@ -18,6 +18,7 @@ SOURCES += \
     countdown.cpp \
     endingpanel.cpp \
     gamecontrol.cpp \
+    loading.cpp \
     main.cpp \
     gamepanel.cpp \
     mybutton.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     endingpanel.h \
     gamecontrol.h \
     gamepanel.h \
+    loading.h \
     mybutton.h \
     player.h \
     playhand.h \
@@ -63,3 +65,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+RC_ICONS = images/logo.ico

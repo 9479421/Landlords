@@ -12,7 +12,7 @@ public:
     explicit CardPanel(QWidget *parent = nullptr);
 
     // 设置获取图片函数
-    void setImage(QPixmap &front, QPixmap &back);
+    void setImage(const QPixmap &front,const QPixmap &back);
     QPixmap getImage();
 
     // 扑克牌显示那一面
@@ -24,7 +24,7 @@ public:
     bool isSelected();
 
     // 扑克牌的花色以及点数
-    void setCard(Card& card);
+    void setCard(const Card& card);
     Card getCard();
 
     // 扑克牌的所有者
@@ -46,9 +46,9 @@ private:
     QPixmap m_front;
     QPixmap m_back;
     bool m_isfront = true;
-    bool m_isSelect;
+    bool m_isSelect = false;
     Card m_card;
-    Player* m_player;
+    Player* m_player = nullptr;
 };
 
 #endif // CARDPANEL_H

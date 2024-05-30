@@ -107,7 +107,7 @@ void Player::grabLordBet(int point)
     emit notifyGrabLordBet(this, point);
 }
 
-void Player::storeDispatchCard(Card &card)
+void Player::storeDispatchCard(const Card &card)
 {
     m_cards.add(card);
 
@@ -116,7 +116,7 @@ void Player::storeDispatchCard(Card &card)
     emit notifyPickCards(this, cs);
 }
 
-void Player::storeDispatchCard(Cards &cards)
+void Player::storeDispatchCard(const Cards &cards)
 {
     m_cards.add(cards);
     emit notifyPickCards(this, cards);
@@ -138,7 +138,7 @@ void Player::playHand(Cards &cards)
     emit notifyPlayHand(this,cards);
 }
 
-void Player::setPendingInfo(Player *player, Cards &cards)
+void Player::setPendingInfo(Player *player,const Cards &cards)
 {
     m_pendPlayer = player;
     m_pendCards = cards;
@@ -154,7 +154,7 @@ Cards Player::getPendCards()
     return m_pendCards;
 }
 
-void Player::storePendingInfo(Player *player, Cards &cards)
+void Player::storePendingInfo(Player *player,const Cards &cards)
 {
     m_pendPlayer = player;
     m_pendCards = cards;

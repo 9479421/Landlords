@@ -24,8 +24,8 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent* ev);
-    int m_index;
-    int m_x;
+    int m_index =0 ;
+    int m_x =0;
 private:
     QPixmap m_image;
 };

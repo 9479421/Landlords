@@ -12,12 +12,18 @@ Robot::Robot(QObject *parent)
 void Robot::prepareCallLord()
 {
     RobotGrapLord* subThread = new RobotGrapLord(this);
+    connect(subThread,&RobotGrapLord::finished,this,[=](){
+        subThread->deleteLater();
+    });
     subThread->start();
 }
 
 void Robot::preparePlayHand()
 {
     RobotPlayHand* subThread = new RobotPlayHand(this);
+    connect(subThread,&RobotGrapLord::finished,this,[=](){
+        subThread->deleteLater();
+    });
     subThread->start();
 }
 

@@ -175,7 +175,7 @@ void GamePanel::initButtonGroup()
 void GamePanel::initPlayerContext()
 {
     // 1.放置玩家扑克牌的区域
-    QRect cardsRect[] =
+    const QRect cardsRect[] =
     {
         // x, y, width, height
         QRect(90,130,100,height() - 200), //左侧机器人
@@ -183,7 +183,7 @@ void GamePanel::initPlayerContext()
         QRect(250, rect().bottom()- 120, width() - 500 , 100) // 当前玩家
     };
     // 2.玩家出牌的区域
-    QRect playHandRect[] =
+    const QRect playHandRect[] =
     {
         // x, y, width, height
         QRect(260,150,100,100), //左侧机器人
@@ -191,7 +191,7 @@ void GamePanel::initPlayerContext()
         QRect(150, rect().bottom()- 290, width() - 300 , 100) // 当前玩家
     };
     // 3.玩家头像显示的位置
-    QPoint roleImgPos[] =
+    const QPoint roleImgPos[] =
     {
         // x, y, width, height
         QPoint(cardsRect[0].left() - 80 , cardsRect[0].height()/2+20), //左侧机器人
@@ -350,7 +350,7 @@ void GamePanel::cardMoveStep(Player *player , int curPos)
     // 得到每个玩家的扑克牌展示区域
     QRect cardRect = m_contextMap[player].cardRect;
     // 每个玩家的单元步长
-    int unit[] = {
+    const int unit[] = {
         (m_baseCardPos.x() - cardRect.right()) /100,
         (cardRect.left() - m_baseCardPos.x()) / 100,
         (cardRect.top() - m_baseCardPos.y()) / 100,
@@ -376,9 +376,10 @@ void GamePanel::cardMoveStep(Player *player , int curPos)
     }
 }
 
-void GamePanel::disposCard(Player *player, Cards &cards)
+void GamePanel::disposCard(Player *player,const Cards &cards)
 {
-    CardList list = cards.toCardList();
+    Cards& myCard = const_cast<Cards&> (cards);
+    CardList list = myCard.toCardList();
     for (int i = 0; i < list.size(); ++i) {
         CardPanel* panel = m_cardMap[list.at(i)];
         panel->setOwner(player);
@@ -556,7 +557,7 @@ void GamePanel::onPlayerStatusChanged(Player *player, GameControl::PlayerStatus 
         hidePlayerDropCards(player);
         if(player == m_gameCtl->getUserPlayer()){
             // 取出出牌玩家的对象
-            Player* pendPlayer = m_gameCtl->getPendPlayer();
+            const Player* pendPlayer = m_gameCtl->getPendPlayer();
             if(pendPlayer == m_gameCtl->getUserPlayer() || pendPlayer == nullptr)
             {
                 ui->btnGroup->selectPanel(ButtonGroup::PlayCard);

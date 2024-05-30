@@ -217,7 +217,7 @@ void GameControl::onGrabBet(Player *player, int bet)
     m_curPlayer->prepareCallLord();
 }
 
-void GameControl::onPlayHand(Player *player, Cards &cards)
+void GameControl::onPlayHand(Player *player,Cards &cards)
 {
     //1.将玩家出牌的信号转发给主界面
     emit notifyPlayHand(player,cards);
@@ -241,8 +241,8 @@ void GameControl::onPlayHand(Player *player, Cards &cards)
         if(player->getRole() == Player::Lord)
         {
             player->setScore(player->getScore() + m_curBet);
-            prev->setScore(player->getScore() - m_curBet);
-            next->setScore(player->getScore() - m_curBet);
+            prev->setScore(prev->getScore() - m_curBet);
+            next->setScore(next->getScore() - m_curBet);
             player->setWin(true);
             prev->setWin(false);
             next->setWin(false);
@@ -250,13 +250,13 @@ void GameControl::onPlayHand(Player *player, Cards &cards)
             player->setWin(true);
             player->setScore(player->getScore() + m_curBet);
             if(prev->getRole() == Player::Lord){
-                prev->setScore(player->getScore() - 2*m_curBet);
-                next->setScore(player->getScore() + m_curBet);
+                prev->setScore(prev->getScore() - 2*m_curBet);
+                next->setScore(next->getScore() + m_curBet);
                 prev->setWin(false);
                 next->setWin(true);
             }else{
-                next->setScore(player->getScore() - 2*m_curBet);
-                prev->setScore(player->getScore() + m_curBet);
+                next->setScore(next->getScore() - 2*m_curBet);
+                prev->setScore(prev->getScore() + m_curBet);
                 next->setWin(false);
                 prev->setWin(true);
             }

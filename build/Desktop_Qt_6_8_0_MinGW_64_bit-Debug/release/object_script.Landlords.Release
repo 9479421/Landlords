@@ -7,6 +7,7 @@ release/cards.o
 release/countdown.o
 release/endingpanel.o
 release/gamecontrol.o
+release/loading.o
 release/main.o
 release/gamepanel.o
 release/mybutton.o
@@ -27,6 +28,7 @@ release/moc_countdown.o
 release/moc_endingpanel.o
 release/moc_gamecontrol.o
 release/moc_gamepanel.o
+release/moc_loading.o
 release/moc_mybutton.o
 release/moc_player.o
 release/moc_robot.o

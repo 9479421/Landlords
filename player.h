@@ -53,8 +53,8 @@ public:
     void grabLordBet(int point);
 
     // 存储扑克牌(发牌的时候得到的)
-    void storeDispatchCard(Card& card);
-    void storeDispatchCard(Cards& cards);
+    void storeDispatchCard(const Card& card);
+    void storeDispatchCard( const Cards& cards);
 
     // 得到所有的牌
     Cards getCards();
@@ -64,12 +64,12 @@ public:
     void playHand(Cards& cards);
 
     // 设置出牌的玩家以及待处理的扑克牌
-    void setPendingInfo(Player* player,Cards& cards);
+    void setPendingInfo(Player* player,const Cards& cards);
     Player* getPendPlayer();
     Cards getPendCards();
 
     // 存储出牌玩家对象和打出的牌
-    void storePendingInfo(Player* player,Cards &cards);
+    void storePendingInfo(Player* player,const Cards &cards);
 
     // 虚函数
     virtual void prepareCallLord();
@@ -83,7 +83,7 @@ signals:
     // 通知已经出牌
     void notifyPlayHand(Player* player, Cards& cards);
     // 通知已经发牌了,3张底牌
-    void notifyPickCards(Player* player, Cards& cards);
+    void notifyPickCards(Player* player,const Cards& cards);
 
 
 protected:

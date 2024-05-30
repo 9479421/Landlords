@@ -23,7 +23,7 @@ class GamePanel : public QMainWindow
     Q_OBJECT
 
 public:
-    GamePanel(QWidget *parent = nullptr);
+    explicit GamePanel(QWidget *parent = nullptr);
     ~GamePanel();
 
     enum AnimationType{ShunZi,LianDui,Plane,JokerBomb,Bomb ,Bet};
@@ -48,7 +48,7 @@ public:
     // 移动扑克牌
     void cardMoveStep(Player *player , int curPos);
     // 处理分发得到的扑克牌
-    void disposCard(Player *player, Cards& cards);
+    void disposCard(Player *player,const Cards& cards);
     // 更新扑克牌在窗口中的显示
     void updatePlayerCards(Player* player);
     // 加载玩家头像
